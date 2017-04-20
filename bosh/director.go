@@ -29,6 +29,7 @@ type Director interface {
 	ExportReleases(targetDirectory string, releases []string) error
 	UploadRelease(releaseURL string) error
 	UploadStemcell(stemcellURL string) error
+	RunErrand(errandName string) error
 }
 
 type BoshDirector struct {
@@ -164,6 +165,18 @@ func (d BoshDirector) UploadStemcell(URL string) error {
 
 	if err != nil {
 		return fmt.Errorf("Could not upload stemcell %s: %s\n", URL, err)
+	}
+
+	return nil
+}
+
+func (d BoshDirector) RunErrand(errandName string) error {
+	err := d.commandRunner.Execute(&boshcmd.RunErrandOpts{
+		Args: boshcmd.RunErrandArgs{Name: errandName},
+	})
+
+	if err != nil {
+		return fmt.Errorf("Could not run errand %s: %s\n", errandName, err)
 	}
 
 	return nil
