@@ -12,11 +12,11 @@ import (
 
 	"errors"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh"
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh/boshfakes"
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
-	"github.com/cloudfoundry/bosh-deployment-resource/out"
-	"github.com/cloudfoundry/bosh-deployment-resource/storage/storagefakes"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh/boshfakes"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
+	"github.com/starkandwayne/bosh2-errand-resource/out"
+	"github.com/starkandwayne/bosh2-errand-resource/storage/storagefakes"
 )
 
 var _ = Describe("OutCommand", func() {

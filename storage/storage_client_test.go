@@ -1,11 +1,11 @@
 package storage_test
 
 import (
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
-	"github.com/cloudfoundry/bosh-deployment-resource/gcp"
-	"github.com/cloudfoundry/bosh-deployment-resource/storage"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
+	"github.com/starkandwayne/bosh2-errand-resource/gcp"
+	"github.com/starkandwayne/bosh2-errand-resource/storage"
 )
 
 var _ = Describe("StorageClient", func() {

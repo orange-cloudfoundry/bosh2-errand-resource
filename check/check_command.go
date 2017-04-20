@@ -1,8 +1,8 @@
 package check
 
 import (
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh"
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
 )
 
 type CheckCommand struct {

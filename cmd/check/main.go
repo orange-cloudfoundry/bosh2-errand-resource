@@ -7,9 +7,9 @@ import (
 
 	"io/ioutil"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh"
-	"github.com/cloudfoundry/bosh-deployment-resource/check"
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh"
+	"github.com/starkandwayne/bosh2-errand-resource/check"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
 )
 
 func main() {

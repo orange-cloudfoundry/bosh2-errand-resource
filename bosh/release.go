@@ -3,7 +3,7 @@ package bosh
 import (
 	"fmt"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/tools"
+	"github.com/starkandwayne/bosh2-errand-resource/tools"
 	"gopkg.in/yaml.v2"
 )
 

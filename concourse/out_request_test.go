@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
 )
 
 var _ = Describe("NewOutRequest", func() {

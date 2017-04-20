@@ -3,8 +3,8 @@ package storage
 import (
 	"encoding/json"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
-	"github.com/cloudfoundry/bosh-deployment-resource/gcp"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
+	"github.com/starkandwayne/bosh2-errand-resource/gcp"
 )
 
 type GCSConfig struct {

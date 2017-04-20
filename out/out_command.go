@@ -6,10 +6,10 @@ import (
 	"os"
 	"path"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh"
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
-	"github.com/cloudfoundry/bosh-deployment-resource/storage"
-	"github.com/cloudfoundry/bosh-deployment-resource/tools"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
+	"github.com/starkandwayne/bosh2-errand-resource/storage"
+	"github.com/starkandwayne/bosh2-errand-resource/tools"
 )
 
 type OutResponse struct {

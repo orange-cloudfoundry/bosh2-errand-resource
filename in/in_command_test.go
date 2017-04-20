@@ -10,9 +10,9 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh/boshfakes"
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
-	"github.com/cloudfoundry/bosh-deployment-resource/in"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh/boshfakes"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
+	"github.com/starkandwayne/bosh2-errand-resource/in"
 )
 
 var _ = Describe("InCommand", func() {

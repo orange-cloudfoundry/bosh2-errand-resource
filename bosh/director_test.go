@@ -7,10 +7,10 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh"
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh/boshfakes"
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
 	"github.com/cppforlife/go-patch/patch"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh/boshfakes"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
 
 	boshcmd "github.com/cloudfoundry/bosh-cli/cmd"
 	boshdir "github.com/cloudfoundry/bosh-cli/director"
