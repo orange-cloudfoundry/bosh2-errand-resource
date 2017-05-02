@@ -65,10 +65,10 @@ type FakeDirector struct {
 	uploadStemcellReturnsOnCall map[int]struct {
 		result1 error
 	}
-	RunErrandStub        func(errandName string) error
+	RunErrandStub        func(runErrandParams bosh.RunErrandParams) error
 	runErrandMutex       sync.RWMutex
 	runErrandArgsForCall []struct {
-		errandName string
+		runErrandParams bosh.RunErrandParams
 	}
 	runErrandReturns struct {
 		result1 error
@@ -327,16 +327,16 @@ func (fake *FakeDirector) UploadStemcellReturnsOnCall(i int, result1 error) {
 	}{result1}
 }
 
-func (fake *FakeDirector) RunErrand(errandName string) error {
+func (fake *FakeDirector) RunErrand(runErrandParams bosh.RunErrandParams) error {
 	fake.runErrandMutex.Lock()
 	ret, specificReturn := fake.runErrandReturnsOnCall[len(fake.runErrandArgsForCall)]
 	fake.runErrandArgsForCall = append(fake.runErrandArgsForCall, struct {
-		errandName string
-	}{errandName})
-	fake.recordInvocation("RunErrand", []interface{}{errandName})
+		runErrandParams bosh.RunErrandParams
+	}{runErrandParams})
+	fake.recordInvocation("RunErrand", []interface{}{runErrandParams})
 	fake.runErrandMutex.Unlock()
 	if fake.RunErrandStub != nil {
-		return fake.RunErrandStub(errandName)
+		return fake.RunErrandStub(runErrandParams)
 	}
 	if specificReturn {
 		return ret.result1
@@ -350,10 +350,10 @@ func (fake *FakeDirector) RunErrandCallCount() int {
 	return len(fake.runErrandArgsForCall)
 }
 
-func (fake *FakeDirector) RunErrandArgsForCall(i int) string {
+func (fake *FakeDirector) RunErrandArgsForCall(i int) bosh.RunErrandParams {
 	fake.runErrandMutex.RLock()
 	defer fake.runErrandMutex.RUnlock()
-	return fake.runErrandArgsForCall[i].errandName
+	return fake.runErrandArgsForCall[i].runErrandParams
 }
 
 func (fake *FakeDirector) RunErrandReturns(result1 error) {
