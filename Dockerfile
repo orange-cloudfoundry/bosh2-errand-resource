@@ -1,5 +1,5 @@
-FROM concourse/buildroot:git
-MAINTAINER https://github.com/cloudfoundry/bosh-deployment-resource
+FROM concourse/buildroot:base
+MAINTAINER https://github.com/starkandwayne/bosh2-errand-resource
 
 ADD check /opt/resource/check
 ADD in /opt/resource/in
