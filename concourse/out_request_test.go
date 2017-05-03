@@ -5,28 +5,18 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
 )
 
 var _ = Describe("NewOutRequest", func() {
 	It("converts the config into an OutRequest", func() {
 		config := []byte(`{
 			"params": {
-				"manifest": "path/to/manifest.yml",
-				"vars": {
-					"foo": "bar",
-					"slice": [1, "two"]
-				},
-				"vars_files": [
-					"path/to/file",
-					"second/path/to/file"
-				],
-				"ops_files": [
-					"ops-file1",
-					"path/to/ops-file2"
-				]
+				"name": "smoke_tests",
+        "keep_alive": true,
+        "when_changed": true
 			},
 			"source": {
 				"deployment": "mydeployment",
@@ -61,19 +51,9 @@ var _ = Describe("NewOutRequest", func() {
 				},
 			},
 			Params: concourse.OutParams{
-				Manifest: "path/to/manifest.yml",
-				Vars: map[string]interface{}{
-					"foo":   "bar",
-					"slice": []interface{}{float64(1), "two"},
-				},
-				VarsFiles: []string{
-					"path/to/file",
-					"second/path/to/file",
-				},
-				OpsFiles: []string{
-					"ops-file1",
-					"path/to/ops-file2",
-				},
+				ErrandName:  "smoke_tests",
+				KeepAlive:   true,
+				WhenChanged: true,
 			},
 		}))
 	})
@@ -96,7 +76,7 @@ var _ = Describe("NewOutRequest", func() {
 
 			configTemplate := `{
 				"params": {
-					"manifest": "path/to/manifest.yml",
+					"name": "smoke_tests",
 					"source_file": "%s"
 				},
 				"source": {
@@ -137,7 +117,7 @@ var _ = Describe("NewOutRequest", func() {
 					},
 				},
 				Params: concourse.OutParams{
-					Manifest: "path/to/manifest.yml",
+					ErrandName: "smoke_tests",
 				},
 			}))
 		})
@@ -166,7 +146,7 @@ var _ = Describe("NewOutRequest", func() {
 			_, err := concourse.NewOutRequest(config, "")
 			Expect(err).To(HaveOccurred())
 
-			Expect(err.Error()).To(ContainSubstring("manifest"))
+			Expect(err.Error()).To(ContainSubstring("name"))
 		})
 	})
 })

@@ -1,41 +1,41 @@
 ---
 resources:
-- name: bosh-deployment-resource
+- name: bosh2-errand-resource
   type: git
   source:
     branch: master
-    uri: git@github.com:cloudfoundry/bosh-deployment-resource
+    uri: git@github.com:starkandwayne/bosh2-errand-resource
     ignore_paths: [ci/*]
-    private_key: {{bosh-deployment-resource-git-deploy-private-key}}
+    private_key: {{bosh2-errand-resource-git-deploy-private-key}}
 
-- name: bosh-deployment-resource-image
+- name: bosh2-errand-resource-image
   type: docker-image
   source:
     username: {{dockerhub_username}}
     password: {{dockerhub_password}}
-    repository:  &bosh-deployment-resource-image-repo cloudfoundry/bosh-deployment-resource
+    repository:  &bosh2-errand-resource-image-repo starkandwayne/bosh2-errand-resource
 
 - name: version
   type: semver
   source:
     driver: git
-    uri: git@github.com:cloudfoundry/bosh-deployment-resource
+    uri: git@github.com:starkandwayne/bosh2-errand-resource
     branch: version
     file: version
-    private_key: {{bosh-deployment-resource-git-deploy-private-key}}
+    private_key: {{bosh2-errand-resource-git-deploy-private-key}}
 
-- name: bosh-deployment-resource-github-release
+- name: bosh2-errand-resource-github-release
   type: github-release
   source:
-    access_token: {{bosh-deployment-resource-github-release-access-token}}
-    repository: bosh-deployment-resource
-    user: cloudfoundry
+    access_token: {{bosh2-errand-resource-github-release-access-token}}
+    repository: bosh2-errand-resource
+    user: starkandwayne-bot
 
-- name: bosh-deployment-resource-ci
+- name: bosh2-errand-resource-ci
   type: git
   source:
     branch: master
-    uri: https://github.com/cloudfoundry/bosh-deployment-resource
+    uri: https://github.com/starkandwayne/bosh2-errand-resource
     paths: [ci/*]
 
 jobs:
@@ -43,37 +43,37 @@ jobs:
   plan:
   - do:
     - aggregate:
-      - get: bosh-deployment-resource-ci
-      - get: bosh-deployment-resource
+      - get: bosh2-errand-resource-ci
+      - get: bosh2-errand-resource
         trigger: true
     - task: unit-test
-      file: bosh-deployment-resource-ci/ci/tasks/unit-test.yml
+      file: bosh2-errand-resource-ci/ci/tasks/unit-test.yml
 
 - name: rc
   serial_groups: [version]
   plan:
   - do:
     - aggregate:
-      - get: bosh-deployment-resource-ci
-      - get: bosh-deployment-resource
+      - get: bosh2-errand-resource-ci
+      - get: bosh2-errand-resource
         passed: [test]
         trigger: true
       - get: version
         params: {pre: rc}
     - aggregate:
       - task: build
-        file: bosh-deployment-resource-ci/ci/tasks/build.yml
+        file: bosh2-errand-resource-ci/ci/tasks/build.yml
       - task: write-release-candidate-tag
-        file: bosh-deployment-resource-ci/ci/tasks/write-tag-file.yml
+        file: bosh2-errand-resource-ci/ci/tasks/write-tag-file.yml
         params:
           TAG: &rc-tag release-candidate
     - aggregate:
-      - put: bosh-deployment-resource-image
+      - put: bosh2-errand-resource-image
         params:
           build: built-binaries
           tag: version/version
           tag_prefix: v
-      - put: bosh-deployment-resource-image
+      - put: bosh2-errand-resource-image
         params:
           build: built-binaries
           tag: tag-file/tag
@@ -85,38 +85,38 @@ jobs:
   plan:
   - do:
     - aggregate:
-      - get: bosh-deployment-resource-ci
-      - get: bosh-deployment-resource
+      - get: bosh2-errand-resource-ci
+      - get: bosh2-errand-resource
         passed: [rc]
       - get: version
         passed: [rc]
         params: {bump: final}
-      - get: bosh-deployment-resource-image
+      - get: bosh2-errand-resource-image
         passed: [rc]
     - task: write-latest-final-tag
-      file: bosh-deployment-resource-ci/ci/tasks/write-tag-file.yml
+      file: bosh2-errand-resource-ci/ci/tasks/write-tag-file.yml
       params:
         TAG: latest
     - aggregate:
-      - put: bosh-deployment-resource-image
+      - put: bosh2-errand-resource-image
         params:
-          pull_repository: *bosh-deployment-resource-image-repo
+          pull_repository: *bosh2-errand-resource-image-repo
           pull_tag: *rc-tag
           tag: version/version
           tag_prefix: v
-      - put: bosh-deployment-resource-image
+      - put: bosh2-errand-resource-image
         params:
-          pull_repository: *bosh-deployment-resource-image-repo
+          pull_repository: *bosh2-errand-resource-image-repo
           pull_tag: *rc-tag
           tag: tag-file/tag
-      - put: bosh-deployment-resource
+      - put: bosh2-errand-resource
         params:
-          repository: bosh-deployment-resource
+          repository: bosh2-errand-resource
           tag: version/version
           tag_prefix: v
           only_tag: true
     - aggregate:
-      - put: bosh-deployment-resource-github-release
+      - put: bosh2-errand-resource-github-release
         params:
           name: version/version
           tag: version/version

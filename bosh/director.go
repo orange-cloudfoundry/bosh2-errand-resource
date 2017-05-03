@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/cloudfoundry/bosh-deployment-resource/concourse"
+	"github.com/starkandwayne/bosh2-errand-resource/concourse"
 
 	boshcmd "github.com/cloudfoundry/bosh-cli/cmd"
 	boshdir "github.com/cloudfoundry/bosh-cli/director"
@@ -23,12 +23,19 @@ type DeployParams struct {
 	VarsStore string
 }
 
+type RunErrandParams struct {
+	ErrandName  string
+	KeepAlive   bool
+	WhenChanged bool
+}
+
 type Director interface {
 	Deploy(manifestBytes []byte, deployParams DeployParams) error
 	DownloadManifest() ([]byte, error)
 	ExportReleases(targetDirectory string, releases []string) error
 	UploadRelease(releaseURL string) error
 	UploadStemcell(stemcellURL string) error
+	RunErrand(runErrandParams RunErrandParams) error
 }
 
 type BoshDirector struct {
@@ -164,6 +171,20 @@ func (d BoshDirector) UploadStemcell(URL string) error {
 
 	if err != nil {
 		return fmt.Errorf("Could not upload stemcell %s: %s\n", URL, err)
+	}
+
+	return nil
+}
+
+func (d BoshDirector) RunErrand(params RunErrandParams) error {
+	err := d.commandRunner.Execute(&boshcmd.RunErrandOpts{
+		Args:        boshcmd.RunErrandArgs{Name: params.ErrandName},
+		KeepAlive:   params.KeepAlive,
+		WhenChanged: params.WhenChanged,
+	})
+
+	if err != nil {
+		return fmt.Errorf("Could not run errand %s: %s\n", params.ErrandName, err)
 	}
 
 	return nil

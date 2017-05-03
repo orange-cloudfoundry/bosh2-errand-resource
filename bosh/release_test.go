@@ -1,9 +1,9 @@
 package bosh_test
 
 import (
-	"github.com/cloudfoundry/bosh-deployment-resource/bosh"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/starkandwayne/bosh2-errand-resource/bosh"
 )
 
 var _ = Describe("Release", func() {
