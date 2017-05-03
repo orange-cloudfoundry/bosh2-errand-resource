@@ -1,6 +1,6 @@
 ---
 resources:
-- name: bosh-deployment-resource
+- name: bosh2-errand-resource
   type: git
   source:
     branch: master
@@ -29,7 +29,7 @@ resources:
   source:
     access_token: {{bosh2-errand-resource-github-release-access-token}}
     repository: bosh2-errand-resource
-    user: starkandwayne
+    user: starkandwayne-bot
 
 - name: bosh2-errand-resource-ci
   type: git
