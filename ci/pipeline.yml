@@ -29,7 +29,7 @@ resources:
   source:
     access_token: {{bosh2-errand-resource-github-release-access-token}}
     repository: bosh2-errand-resource
-    user: starkandwayne-bot
+    user: starkandwayne
 
 - name: bosh2-errand-resource-ci
   type: git
