@@ -1,4 +1,4 @@
 dockerhub_username: (( vault "secret/dockerhub:username" ))
 dockerhub_password: (( vault "secret/dockerhub:password" ))
-bosh2-errand-resource-git-deploy-private-key: (( vault "secret/pipelines/bosh2-errand-resource/github:private" )
+bosh2-errand-resource-git-deploy-private-key: (( vault "secret/pipelines/bosh2-errand-resource/github:private" ))
 bosh2-errand-resource-github-release-access-token: (( vault "secret/pipelines/bosh2-errand-resource/github:token" ))
