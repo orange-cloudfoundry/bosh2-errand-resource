@@ -1,11 +1,11 @@
-# BOSH Deployment Resource
+# BOSH Errand Resource
 
-A resource that will deploy releases and stemcells using the [BOSH CLI v2](https://bosh.io/docs/cli-v2.html). 
+A resource that will run an errand using the [BOSH CLI v2](https://bosh.io/docs/cli-v2.html).
 
 ## Differences from original BOSH Deployment Resource
 
-The original [BOSH Deployment Resource](https://github.com/concourse/bosh-deployment-resource)
-uses the Ruby CLI and does not support newer BOSH features.
+The original [BOSH Errand Resource](https://github.com/starkandwayne/bosh-errand-resource)
+uses the Ruby CLI and does not support newer BOSH features (for example UAA auth).
 
 ### Breaking Changes
 
@@ -14,14 +14,14 @@ uses the Ruby CLI and does not support newer BOSH features.
 
 ## Adding to your pipeline
 
-To use the BOSH Deployment Resource, you must declare it in your pipeline as a resource type:
+To use the BOSH Errand Resource, you must declare it in your pipeline as a resource type:
 
 ```
 resource_types:
-- name: bosh-deployment
+- name: bosh-errand
   type: docker-image
   source:
-    repository: cloudfoundry/bosh-deployment-resource
+    repository: starkandwayne/bosh2-errand-resource
 ```
 
 ## Source Configuration
@@ -33,16 +33,6 @@ resource_types:
 * `client_secret`: *Required.* The password or UAA client secret for the BOSH director.
 * `ca_cert`: *Optional.* CA certificate used to validate SSL connections to Director and UAA. If omitted, the director's
   certificate must be already trusted.
-* `vars_store`: *Optional.* Configuration for a persisted variables store. Currently only the Google Cloud Storage (GCS)
-  provider is supported. `json_key` must be the the JSON key for your service account. Example:
-
-  ```
-  provider: gcs
-    config:
-      bucket: my-bucket
-      file_name: path/to/vars-store.yml
-      json_key: "{\"type\": \"service_account\"}"
-  ```
 
 ### Example
 
@@ -95,54 +85,17 @@ Sample source file:
 
 ## Behaviour
 
-### `in`: Deploy a BOSH deployment
+### `out`: Run a BOSH errand
 
-This will download the deployment manifest. It will place two files in the target directory:
-
-- `manifest.yml`: The deployment manifest
-- `target`: The hostname for the director
-
-_Note_: Only the most recent version is fetchable
+This will run any given errand for the specified deployment.
 
 #### Parameters
 
-* `compiled_releases`: *Optional.* List of compiled releases to download. Deployment can only have one stemcell.
+* `name`: *Required.* Name of the errand to run
 
-``` yaml
-- get: staging
-  params:
-    compiled_releases:
-    - name: release-one
-    - name: release-two
-```
+* `keep_alive`: *Optional.* Use existing VM to run an errand and keep it after completion
 
-### `out`: Deploy a BOSH deployment
-
-This will upload any given stemcells and releases, lock them down in the
-deployment manifest and then deploy.
-
-#### Parameters
-
-* `manifest`: *Required.* Path to a BOSH deployment manifest file.
-
-* `stemcells`: *Optional.* An array of globs that should point to where the
-  stemcells used in the deployment can be found. Stemcell entries in the
-  manifest with version 'latest' will be updated to the actual provided
-  stemcell versions.
-
-* `releases`: *Optional.* An array of globs that should point to where the
-  releases used in the deployment can be found.
-
-* `vars`: *Optional.* A collection of variables to be set in the deployment manifest.
-
-* `vars_files`: *Optional.* A collection of vars files to be interpolated into the deployment manifest.
-
-* `ops_files`: *Optional.* A collection of ops files to be applied over the deployment manifest.
-
-* `cleanup`: *Optional* An boolean that specifies if a bosh cleanup should be
-  run before deployment. Defaults to false.
-
-* `no_redact`: *Optional* Removes redacted from Bosh output. Defaults to false.
+* `when_changed`: *Optional.* Run errand only if errand configuration has changed or if the previous run was unsuccessful
 
 * `target_file`: *Optional.* Path to a file containing a BOSH director address.
   This allows the target to be determined at runtime, e.g. by acquiring a BOSH
@@ -155,15 +108,5 @@ deployment manifest and then deploy.
 ``` yaml
 - put: staging
   params:
-    manifest: path/to/manifest.yml
-    stemcells:
-    - path/to/stemcells-*
-    releases:
-    - path/to/releases-*
-    vars:
-      enable_ssl: true
-      domains: ["example.com", "example.net"]
-      smtp:
-        server: example.com
-        port: 25
+    name: smoke-tests
 ```
