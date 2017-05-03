@@ -7,7 +7,7 @@ export GOPATH="${PWD}/gopath"
 export PATH="${GOPATH}/bin:${PATH}"
 go get github.com/onsi/ginkgo/ginkgo
 
-cd gopath/src/github.com/cloudfoundry/bosh-deployment-resource
+cd gopath/src/github.com/starkandwayne/bosh2-errand-resource
 
 go build -o "$BUILT_BINARIES_DIR/out" ./cmd/out
 
