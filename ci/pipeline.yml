@@ -4,7 +4,7 @@ resources:
   type: git
   source:
     branch: master
-    uri: git@github.com:starkandwayne/bosh2-errand-resource
+    uri: git@github.com:cloudfoundry-community/bosh2-errand-resource
     ignore_paths: [ci/*]
     private_key: {{bosh2-errand-resource-git-deploy-private-key}}
 
@@ -13,13 +13,13 @@ resources:
   source:
     username: {{dockerhub_username}}
     password: {{dockerhub_password}}
-    repository:  &bosh2-errand-resource-image-repo starkandwayne/bosh2-errand-resource
+    repository:  &bosh2-errand-resource-image-repo cfcommunity/bosh2-errand-resource
 
 - name: version
   type: semver
   source:
     driver: git
-    uri: git@github.com:starkandwayne/bosh2-errand-resource
+    uri: git@github.com:cloudfoundry-community/bosh2-errand-resource
     branch: version
     file: version
     private_key: {{bosh2-errand-resource-git-deploy-private-key}}
@@ -29,13 +29,13 @@ resources:
   source:
     access_token: {{bosh2-errand-resource-github-release-access-token}}
     repository: bosh2-errand-resource
-    user: starkandwayne
+    user: cloudfoundry-community
 
 - name: bosh2-errand-resource-ci
   type: git
   source:
     branch: master
-    uri: https://github.com/starkandwayne/bosh2-errand-resource
+    uri: https://github.com/cloudfoundry-community/bosh2-errand-resource
     paths: [ci/*]
 
 jobs:
