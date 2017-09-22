@@ -37,8 +37,8 @@ resource_types:
 ### Example
 
 ``` yaml
-- name: staging
-  type: bosh-deployment
+- name: bosh-errand
+  type: bosh-errand
   source:
     deployment: staging-deployment-name
     target: https://bosh.example.com:25555
