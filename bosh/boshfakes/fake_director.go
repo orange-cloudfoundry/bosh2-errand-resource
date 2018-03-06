@@ -4,7 +4,7 @@ package boshfakes
 import (
 	"sync"
 
-	"github.com/starkandwayne/bosh2-errand-resource/bosh"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/bosh"
 )
 
 type FakeDirector struct {

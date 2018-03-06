@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/starkandwayne/bosh2-errand-resource/concourse"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/concourse"
 
 	boshcmd "github.com/cloudfoundry/bosh-cli/cmd"
 	boshdir "github.com/cloudfoundry/bosh-cli/director"
@@ -155,7 +155,7 @@ func (d BoshDirector) ExportReleases(targetDirectory string, releases []string) 
 		err = d.commandRunner.ExecuteWithDefaultOverride(&boshcmd.ExportReleaseOpts{
 			Args:      boshcmd.ExportReleaseArgs{ReleaseSlug: releaseSlug, OSVersionSlug: osVersionSlug},
 			Directory: directory,
-		}, directoryFixFunction)
+		}, directoryFixFunction, nil)
 		if err != nil {
 			return fmt.Errorf("could not export release %s: %s", deploymentRelease.Name(), err)
 		}

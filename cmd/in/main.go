@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 
-	"github.com/starkandwayne/bosh2-errand-resource/bosh"
-	"github.com/starkandwayne/bosh2-errand-resource/concourse"
-	"github.com/starkandwayne/bosh2-errand-resource/in"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/bosh"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/concourse"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/in"
+	proxy "github.com/cloudfoundry/socks5-proxy"
 )
 
 func main() {
@@ -40,7 +42,9 @@ func main() {
 		os.Exit(0)
 	}
 
-	cliCoordinator := bosh.NewCLICoordinator(inRequest.Source, os.Stderr)
+	hostKeyGetter := proxy.NewHostKey()
+	socks5Proxy := proxy.NewSocks5Proxy(hostKeyGetter, log.New(ioutil.Discard, "", log.LstdFlags))
+	cliCoordinator := bosh.NewCLICoordinator(inRequest.Source, os.Stderr, socks5Proxy)
 	commandRunner := bosh.NewCommandRunner(cliCoordinator)
 	cliDirector, err := cliCoordinator.Director()
 	if err != nil {

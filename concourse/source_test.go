@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"github.com/cloudfoundry-community/bosh2-errand-resource/concourse"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/starkandwayne/bosh2-errand-resource/concourse"
 )
 
 var _ = Describe("NewDynamicSource", func() {
@@ -45,6 +45,9 @@ var _ = Describe("NewDynamicSource", func() {
 					"target": "director.example.com",
 					"client": "original_client",
 					"client_secret": "foobar",
+					"jumpbox_ssh_key": "some-ssh-key",
+					"jumpbox_url": "jumpbox.example.com",
+					"jumpbox_username": "some-user",
 					"vars_store": {
 						"provider": "gcs",
 						"config": {
@@ -84,10 +87,13 @@ var _ = Describe("NewDynamicSource", func() {
 			Expect(err).NotTo(HaveOccurred())
 
 			Expect(source).To(Equal(concourse.Source{
-				Deployment:   "fileDeployment",
-				Target:       "fileDirector.com",
-				Client:       "original_client",
-				ClientSecret: "fileSecret",
+				Deployment:      "fileDeployment",
+				Target:          "fileDirector.com",
+				Client:          "original_client",
+				ClientSecret:    "fileSecret",
+				JumpboxSSHKey:   "some-ssh-key",
+				JumpboxURL:      "jumpbox.example.com",
+				JumpboxUsername: "some-user",
 				VarsStore: concourse.VarsStore{
 					Provider: "fileProvider",
 					Config: map[string]interface{}{

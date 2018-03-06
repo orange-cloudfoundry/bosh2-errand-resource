@@ -4,7 +4,7 @@ package storagefakes
 import (
 	"sync"
 
-	"github.com/starkandwayne/bosh2-errand-resource/storage"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/storage"
 )
 
 type FakeStorageClient struct {

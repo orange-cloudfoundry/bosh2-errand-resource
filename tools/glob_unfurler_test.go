@@ -6,7 +6,7 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/starkandwayne/bosh2-errand-resource/tools"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/tools"
 )
 
 var _ = Describe("GlobUnfurler", func() {
