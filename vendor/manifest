@@ -53,6 +53,14 @@
 			"notests": true
 		},
 		{
+			"importpath": "github.com/cloudfoundry/socks5-proxy",
+			"repository": "https://github.com/cloudfoundry/socks5-proxy",
+			"vcs": "git",
+			"revision": "3c6b4eec9c2d16c1dac4c42bdb5f755ba09daff8",
+			"branch": "master",
+			"notests": true
+		},
+		{
 			"importpath": "github.com/cloudfoundry/yagnats",
 			"repository": "https://github.com/cloudfoundry/yagnats",
 			"vcs": "git",
