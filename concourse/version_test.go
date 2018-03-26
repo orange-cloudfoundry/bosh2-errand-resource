@@ -1,7 +1,7 @@
 package concourse_test
 
 import (
-	"github.com/starkandwayne/bosh2-errand-resource/concourse"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/concourse"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

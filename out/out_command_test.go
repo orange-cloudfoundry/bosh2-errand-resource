@@ -4,9 +4,9 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"github.com/starkandwayne/bosh2-errand-resource/bosh/boshfakes"
-	"github.com/starkandwayne/bosh2-errand-resource/concourse"
-	"github.com/starkandwayne/bosh2-errand-resource/out"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/bosh/boshfakes"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/concourse"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/out"
 )
 
 var _ = Describe("OutCommand", func() {

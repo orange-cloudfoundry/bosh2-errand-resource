@@ -1,9 +1,9 @@
 package out
 
 import (
-	"github.com/starkandwayne/bosh2-errand-resource/bosh"
-	"github.com/starkandwayne/bosh2-errand-resource/concourse"
-	"github.com/starkandwayne/bosh2-errand-resource/storage"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/bosh"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/concourse"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/storage"
 )
 
 type OutResponse struct {

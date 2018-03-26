@@ -6,9 +6,9 @@ import (
 
 	"errors"
 
-	"github.com/starkandwayne/bosh2-errand-resource/bosh/boshfakes"
-	"github.com/starkandwayne/bosh2-errand-resource/check"
-	"github.com/starkandwayne/bosh2-errand-resource/concourse"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/bosh/boshfakes"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/check"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/concourse"
 )
 
 var _ = Describe("CheckCommand", func() {

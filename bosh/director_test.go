@@ -7,10 +7,10 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
+	"github.com/cloudfoundry-community/bosh2-errand-resource/bosh"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/bosh/boshfakes"
+	"github.com/cloudfoundry-community/bosh2-errand-resource/concourse"
 	"github.com/cppforlife/go-patch/patch"
-	"github.com/starkandwayne/bosh2-errand-resource/bosh"
-	"github.com/starkandwayne/bosh2-errand-resource/bosh/boshfakes"
-	"github.com/starkandwayne/bosh2-errand-resource/concourse"
 
 	boshcmd "github.com/cloudfoundry/bosh-cli/cmd"
 	boshdir "github.com/cloudfoundry/bosh-cli/director"
@@ -248,7 +248,7 @@ var _ = Describe("BoshDirector", func() {
 
 			Expect(commandRunner.ExecuteWithDefaultOverrideCallCount()).To(Equal(2))
 
-			opts, optFunc := commandRunner.ExecuteWithDefaultOverrideArgsForCall(0)
+			opts, optFunc, _ := commandRunner.ExecuteWithDefaultOverrideArgsForCall(0)
 			exportReleaseOpts, _ := opts.(*boshcmd.ExportReleaseOpts)
 			Expect(string(exportReleaseOpts.Args.ReleaseSlug.Name())).To(Equal("cool-release"))
 			Expect(string(exportReleaseOpts.Args.ReleaseSlug.Version())).To(Equal("123.45"))
@@ -259,7 +259,7 @@ var _ = Describe("BoshDirector", func() {
 			Expect(err).ToNot(HaveOccurred())
 			Expect(fixedOpts.(*boshcmd.ExportReleaseOpts).Directory.Path).To(Equal("/tmp/foo"))
 
-			opts, optFunc = commandRunner.ExecuteWithDefaultOverrideArgsForCall(1)
+			opts, optFunc, _ = commandRunner.ExecuteWithDefaultOverrideArgsForCall(1)
 			exportReleaseOpts, _ = opts.(*boshcmd.ExportReleaseOpts)
 			Expect(string(exportReleaseOpts.Args.ReleaseSlug.Name())).To(Equal("awesome-release"))
 			Expect(string(exportReleaseOpts.Args.ReleaseSlug.Version())).To(Equal("987.65"))

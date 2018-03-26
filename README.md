@@ -4,7 +4,7 @@ A resource that will run an errand using the [BOSH CLI v2](https://bosh.io/docs/
 
 ## Differences from original BOSH Deployment Resource
 
-The original [BOSH Errand Resource](https://github.com/starkandwayne/bosh-errand-resource)
+The original [BOSH Errand Resource](https://github.com/cloudfoundry-community/bosh-errand-resource)
 uses the Ruby CLI and does not support newer BOSH features (for example UAA auth).
 
 ### Breaking Changes
@@ -21,7 +21,7 @@ resource_types:
 - name: bosh-errand
   type: docker-image
   source:
-    repository: starkandwayne/bosh2-errand-resource
+    repository: cloudfoundry-community/bosh2-errand-resource
 ```
 
 ## Source Configuration
@@ -33,6 +33,10 @@ resource_types:
 * `client_secret`: *Required.* The password or UAA client secret for the BOSH director.
 * `ca_cert`: *Optional.* CA certificate used to validate SSL connections to Director and UAA. If omitted, the director's
   certificate must be already trusted.
+* `jumpbox_url`: *Optional.* The URL, including port, of the jumpbox. If set, `jumpbox_ssh_key` must also be set. If omitted,
+  the BOSH director will be dialed directly.
+* `jumpbox_ssh_key`: *Optional.* The private key of the jumpbox. If set, `jumpbox_url` must also be set.
+* `jumpbox_username`: *Optional.* The username for the jumpbox. If not set, will default to `jumpbox`.
 
 ### Example
 

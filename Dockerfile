@@ -1,5 +1,5 @@
 FROM concourse/buildroot:base
-MAINTAINER https://github.com/starkandwayne/bosh2-errand-resource
+MAINTAINER https://github.com/cloudfoundry-community/bosh2-errand-resource
 
 ADD check /opt/resource/check
 ADD in /opt/resource/in

@@ -1,12 +1,16 @@
 package bosh
 
 import (
+	"fmt"
+
+	"io"
+
 	boshcmd "github.com/cloudfoundry/bosh-cli/cmd"
 )
 
 type Runner interface {
 	Execute(commandOpts interface{}) error
-	ExecuteWithDefaultOverride(commandOpts interface{}, override func(interface{}) (interface{}, error)) error
+	ExecuteWithDefaultOverride(commandOpts interface{}, override func(interface{}) (interface{}, error), writer io.Writer) error
 }
 
 type CommandRunner struct {
@@ -20,15 +24,22 @@ func NewCommandRunner(cliCoordinator CLICoordinator) CommandRunner {
 }
 
 func (c CommandRunner) Execute(commandOpts interface{}) error {
-	return c.ExecuteWithDefaultOverride(commandOpts, func(opts interface{}) (interface{}, error) { return opts, nil })
+	return c.ExecuteWithDefaultOverride(commandOpts, func(opts interface{}) (interface{}, error) { return opts, nil }, nil)
 }
 
-func (c CommandRunner) ExecuteWithDefaultOverride(commandOpts interface{}, override func(interface{}) (interface{}, error)) error {
-	deps := c.cliCoordinator.StreamingBasicDeps()
-	globalOpts := c.cliCoordinator.GlobalOpts()
+func (c CommandRunner) ExecuteWithDefaultOverride(commandOpts interface{}, override func(interface{}) (interface{}, error), writer io.Writer) error {
+	deps := c.cliCoordinator.BasicDeps(writer)
+
+	addr, err := c.cliCoordinator.StartProxy()
+	if err != nil {
+		return fmt.Errorf("start proxy: %s", err)
+	}
+
+	globalOpts := c.cliCoordinator.GlobalOpts(addr)
+
 	setDefaults(commandOpts)
 
-	commandOpts, err := override(commandOpts)
+	commandOpts, err = override(commandOpts)
 	if err != nil {
 		return err
 	}

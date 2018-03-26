@@ -10,7 +10,7 @@ image_resource:
 inputs:
 - name: bosh2-errand-resource-ci
 - name: bosh2-errand-resource
-  path: gopath/src/github.com/starkandwayne/bosh2-errand-resource
+  path: gopath/src/github.com/cloudfoundry-community/bosh2-errand-resource
 
 outputs:
 - name: built-binaries

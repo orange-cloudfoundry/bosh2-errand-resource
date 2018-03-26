@@ -6,6 +6,6 @@ export GOPATH="${PWD}/gopath"
 export PATH="${GOPATH}/bin:${PATH}"
 go get github.com/onsi/ginkgo/ginkgo
 
-cd gopath/src/github.com/starkandwayne/bosh2-errand-resource
+cd gopath/src/github.com/cloudfoundry-community/bosh2-errand-resource
 
 ginkgo -r -race -p -randomizeAllSpecs -randomizeSuites .
