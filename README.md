@@ -21,8 +21,10 @@ resource_types:
 - name: bosh-errand
   type: docker-image
   source:
-    repository: cloudfoundry-community/bosh2-errand-resource
+    repository: cfcommunity/bosh2-errand-resource
 ```
+
+Prior to release [0.1.2](https://github.com/cloudfoundry-community/bosh2-errand-resource/releases/tag/v0.1.2) , please use `starkandwayne/bosh2-errand-resource` as repository location
 
 ## Source Configuration
 
