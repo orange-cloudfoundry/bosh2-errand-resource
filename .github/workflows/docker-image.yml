@@ -1,0 +1,49 @@
+name: Build and Publish Docker Images
+
+on:
+  push:
+    branches: [ orange-master ]
+    tags:
+      - "v?[0-9]+.[0-9]+.[0-9]+*"
+  pull_request:
+    branches: [ orange-master ]
+  workflow_dispatch:
+
+env:
+  DOCKER_FILE_PATH: .
+  IMAGE: "ghcr.io/${{ github.repository }}"
+jobs:
+  build_and_publish:
+    name: build and publish
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v4
+    -
+      name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    -
+      name: publish image
+      uses: docker/build-push-action@v5.1.0
+      with:
+        context: ${{env.DOCKER_FILE_PATH}}
+        push: true
+        tags: |
+          ${{ env.IMAGE}}:latest
+          ${{ env.IMAGE}}:${{github.sha}}
+    -
+      name: publish tagged image
+      if: github.ref_type == 'tag'
+      uses: docker/build-push-action@v5.1.0
+      with:
+        push: true
+        context: ${{ env.DOCKER_FILE_PATH }}
+        tags: |
+          ${{ env.IMAGE}}:${{github.ref_name}}
