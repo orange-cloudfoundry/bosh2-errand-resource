@@ -12,6 +12,9 @@ on:
 env:
   DOCKER_FILE_PATH: .
   IMAGE: "ghcr.io/${{ github.repository }}"
+  DOCKERHUB_ORG: elpaasoci
+  OCI_IMAGE: concourse-pipeline-resource
+
 jobs:
   build_and_publish:
     name: build and publish
@@ -21,6 +24,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    -
+      name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
     -
       name: Login to GitHub Container Registry
       uses: docker/login-action@v3
@@ -36,6 +45,8 @@ jobs:
         context: ${{env.DOCKER_FILE_PATH}}
         push: true
         tags: |
+          ${{env.DOCKERHUB_ORG}}/${{env.OCI_IMAGE}}:latest
+          ${{env.DOCKERHUB_ORG}}/${{env.OCI_IMAGE}}:${{github.sha}}
           ${{ env.IMAGE}}:latest
           ${{ env.IMAGE}}:${{github.sha}}
     -
@@ -46,4 +57,5 @@ jobs:
         push: true
         context: ${{ env.DOCKER_FILE_PATH }}
         tags: |
-          ${{ env.IMAGE}}:${{github.ref_name}}
+          ${{env.DOCKERHUB_ORG}}/${{env.OCI_IMAGE}}:${{github.ref_name}}
+          ${{env.IMAGE}}:${{github.ref_name}}
