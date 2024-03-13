@@ -37,11 +37,11 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     -
+      name: extract github repo name
       id: gh-repo-name
       run: |
         echo "OCI_IMAGE=$(basename ${{ github.repository }})" >> $GITHUB_ENV
       shell: bash
-
     -
       name: publish image
       uses: docker/build-push-action@v5.1.0
