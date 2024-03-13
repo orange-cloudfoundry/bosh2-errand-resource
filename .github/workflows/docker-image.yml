@@ -13,7 +13,6 @@ env:
   DOCKER_FILE_PATH: .
   IMAGE: "ghcr.io/${{ github.repository }}"
   DOCKERHUB_ORG: elpaasoci
-  OCI_IMAGE: concourse-pipeline-resource
 
 jobs:
   build_and_publish:
@@ -37,7 +36,12 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        
+    -
+      id: gh-repo-name
+      run: |
+        echo "OCI_IMAGE=$(basename ${{ github.repository }})" >> $GITHUB_ENV
+      shell: bash
+
     -
       name: publish image
       uses: docker/build-push-action@v5.1.0
